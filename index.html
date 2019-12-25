@@ -400,7 +400,8 @@
   <script src="lib/counterup/jquery.waypoints.min.js"></script>
   <script src="lib/counterup/jquery.counterup.js"></script>
   <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="lib/lightbox/js/lightbox.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.js"></script>
+  <!-- <script src="lib/lightbox/js/lightbox.min.js"></script> -->
   <script src="lib/typed/typed.min.js"></script>
 
   <!-- Contact Form JavaScript File -->
@@ -411,16 +412,111 @@
   <script type="text/javascript">
   console.log("hello");
 
+    function resetView() {
+
+      var galleryObject = [
+      {
+        "albumIndex" : 1,
+        "thumbnail" : "tn-1",
+        "photos" : [
+          "1-1",
+          "1-2",
+          "1-3"
+        ]
+      },
+      {
+        "albumIndex" : 2,
+        "thumbnail" : "tn-2",
+        "photos" : [
+          "2-1",
+          "2-2",
+          "2-3"
+        ]
+      },
+
+    ];
 
     var gallery = $("#galleryBox");
     gallery.empty();
 
-    for(var index = 1; index <10 ; index++){
-      var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + index+ '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img src="img/work/'+ index+'.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
-      gallery.append(imageInGallery);
+    // for(var index = 1; index <10 ; index++){
+    //   var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + index+ '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img src="img/work/'+ index+'.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli ' + index + '</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
+    //   gallery.append(imageInGallery);
+
+    // }
+
+    galleryObject.forEach(galleryObjectItem => {
+        console.log(galleryObjectItem);
+        index = galleryObjectItem["thumbnail"];
+        albumIndex = galleryObjectItem["albumIndex"];
+        var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + index+ '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img albumIndex="'+ albumIndex +'" src="img/work/'+ index+'.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli ' + index + '</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
+        gallery.append(imageInGallery);
+
+    });
 
     }
 
+    var galleryObject = [
+      {
+        "albumIndex" : 1,
+        "thumbnail" : "tn-1",
+        "photos" : [
+          "1-1",
+          "1-2",
+          "1-3"
+        ]
+      },
+      {
+        "albumIndex" : 2,
+        "thumbnail" : "tn-2",
+        "photos" : [
+          "2-1",
+        ]
+      },
+
+    ];
+
+    var gallery = $("#galleryBox");
+    gallery.empty();
+
+    // for(var index = 1; index <10 ; index++){
+    //   var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + index+ '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img src="img/work/'+ index+'.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli ' + index + '</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
+    //   gallery.append(imageInGallery);
+
+    // }
+
+    galleryObject.forEach(galleryObjectItem => {
+        console.log(galleryObjectItem);
+        index = galleryObjectItem["thumbnail"];
+        albumIndex = galleryObjectItem["albumIndex"];
+        var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + index+ '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img albumIndex="'+ albumIndex +'" src="img/work/'+ index+'.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli ' + index + '</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
+        gallery.append(imageInGallery);
+
+    });
+
+    $('body').on('click', 'a[rel^=lightbox], area[rel^=lightbox], a[data-lightbox], area[data-lightbox]', function(event) {
+      console.log("clicked on ",event.target, event.target.getAttribute("albumIndex") );
+      var albumIndex = event.target.getAttribute("albumIndex");
+      galleryObject.forEach(galleryObjectItem => {
+        console.log(galleryObjectItem, galleryObjectItem.albumIndex, albumIndex);
+        if(albumIndex == galleryObjectItem.albumIndex) {
+          
+          galleryObjectItem.photos.forEach(item => {
+          console.log("APPENDING", item);
+          var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + index+ '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img albumIndex="'+ albumIndex +'" src="img/work/'+ index+'.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli ' + index + '</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
+          gallery.append(imageInGallery);
+
+        });
+        }
+    });
+
+
+      return false;
+    });
+
+    	lightbox.option({
+		onClose : resetView
+	})
 
   </script>
 
