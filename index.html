@@ -500,7 +500,7 @@
           "relativeParent": "albums/08",
           "thumbnail": "thumbnail",
           "photos": [
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+            "1", "2", "3", "4", "5", "6", "7", "8", "9"
           ]
         },
         {
@@ -547,6 +547,8 @@
 
     function resetView() {
 
+      console.log("resetting")
+
       var galleryObject = getGalleryObjects();
 
       var gallery = $("#galleryBox");
@@ -569,6 +571,30 @@
 
     }
 
+
+    function doAttachValidImagesToDom() {
+      var gallery = $("#galleryBox");
+      gallery.empty();
+      var albumIndex = event.target.getAttribute("albumIndex");
+        getGalleryObjects().forEach(galleryObjectItem => {
+
+
+          console.log(galleryObjectItem, galleryObjectItem.albumIndex, albumIndex);
+          if (albumIndex == galleryObjectItem.albumIndex) {
+
+            galleryObjectItem.photos.forEach(item => {
+              console.log("APPENDING", item);
+              var imageInGallery = '<div class="col-md-4"><div class="work-box"><a href="img/work/' + galleryObjectItem.relativeParent + '/' + item + '.jpg" data-lightbox="gallery-mf"><div class="work-img"><img albumIndex="' + albumIndex + '" src="img/work/' + galleryObjectItem.relativeParent + '/' + item + '.jpg" alt="" class="img-fluid"></div><div class="work-content">             <div class="row"><div class="col-sm-8"><h2 class="w-title">Dapoli ' + index + '</h2><div class="w-more"><span class="w-ctegory">Architecture</span> <span class="w-date"></span></div></div><div class="col-sm-4"><div class="w-like"><span class=""></span></div></div></div></div></a></div></div>';
+              console.log("image", imageInGallery);
+              $("#galleryBox").append(imageInGallery);
+
+            });
+          }
+        });
+
+    }
+
+    /*
     function attachOnBodyLoadListener() {
 
       $('body').on('click', 'a[rel^=lightbox], area[rel^=lightbox], a[data-lightbox], area[data-lightbox]', function (event) {
@@ -596,16 +622,17 @@
 
 
     }
-
+    */
     var galleryObject = getGalleryObjects();
 
 
     lightbox.option({
+      onClickCustomEvent : doAttachValidImagesToDom,
       onClose: resetView
     });
 
     resetView();
-    attachOnBodyLoadListener();
+    //attachOnBodyLoadListener();
 
   </script>
 
